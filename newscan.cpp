@@ -107,7 +107,7 @@ extern "C" {
 KSEQ_INIT(int, read)
 
 using namespace std;
-using namespace __gnu_cxx;
+// using namespace __gnu_cxx;
 
 
 
@@ -320,7 +320,7 @@ uint64_t process_file(Args& arg, map<uint64_t,word_stats>& wordFreq)
           perror(__func__);
           throw std::runtime_error("Cannot open input file " + fnam);
       }
-      seq = kseq_init(fp);
+      seq = kseq_init(fileno(fp));
       while ((l =  kseq_read(seq)) >= 0) {
           for (size_t i = 0; i < seq->seq.l; i++) {
               c = std::toupper(seq->seq.s[i]);
