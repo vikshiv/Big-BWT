@@ -99,7 +99,7 @@
 extern "C" {
 #include "utils.h"
 }
-#include <zlib.h>
+// #include <zlib.h>
 #include <stdio.h>
 #include "kseq.h"
 KSEQ_INIT(gzFile, gzread)
