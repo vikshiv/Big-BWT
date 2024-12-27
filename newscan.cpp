@@ -102,7 +102,9 @@ extern "C" {
 // #include <zlib.h>
 #include <stdio.h>
 #include "kseq.h"
-KSEQ_INIT(gzFile, gzread)
+
+// Initialize kseq for standard file streams
+KSEQ_INIT(int, read)
 
 using namespace std;
 using namespace __gnu_cxx;
@@ -311,10 +313,13 @@ uint64_t process_file(Args& arg, map<uint64_t,word_stats>& wordFreq)
   KR_window krw(arg.w);
   std::string line;
   if (arg.is_fasta) {
-      gzFile fp;
       kseq_t *seq;
       int l;
-      fp = gzopen(fnam.c_str(), "r");
+      FILE* fp = fopen(fnam.c_str(), "r");
+      if (!fp) {
+          perror(__func__);
+          throw std::runtime_error("Cannot open input file " + fnam);
+      }
       seq = kseq_init(fp);
       while ((l =  kseq_read(seq)) >= 0) {
           for (size_t i = 0; i < seq->seq.l; i++) {
@@ -329,7 +334,7 @@ uint64_t process_file(Args& arg, map<uint64_t,word_stats>& wordFreq)
           if (c <= Dollar) break;
       }
       kseq_destroy(seq);
-      gzclose(fp);
+      fclose(fp);
   }
   else {
       #ifdef GZSTREAM
