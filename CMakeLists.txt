@@ -15,7 +15,11 @@ set(CMAKE_CXX_FLAGS "-std=c++11 -O3 -Wall -Wextra")
 set(CMAKE_C_FLAGS "-O3 -Wall -std=c99 -g")
 
 set(CMAKE_CXX_FLAGS_DEBUG "-O0 -ggdb -g -march=native")
-set(CMAKE_CXX_FLAGS_RELEASE "-Ofast -fstrict-aliasing -march=native -DNDEBUG")
+if(APPLE)
+    set(CMAKE_CXX_FLAGS_RELEASE "-Ofast -fstrict-aliasing -DNDEBUG")
+else()
+    set(CMAKE_CXX_FLAGS_RELEASE "-Ofast -fstrict-aliasing -march=native -DNDEBUG")
+endif()
 set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-g -ggdb -Ofast -fstrict-aliasing -march=native")
 
 
