@@ -391,7 +391,7 @@ uint64_t process_file(Args& arg, map<uint64_t,word_stats>& wordFreq)
 // function used to compare two string pointers
 bool pstringCompare(const string *a, const string *b)
 {
-  return *a <= *b;
+  return *a < *b;
 }
 
 // given the sorted dictionary and the frequency map write the dictionary and occ files
